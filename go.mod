@@ -1,4 +1,4 @@
-module gvm
+module github.com/mengboy/gvm
 
 go 1.14
 
