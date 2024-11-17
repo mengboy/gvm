@@ -33,10 +33,12 @@ func localList(cmd *cobra.Command, args []string) {
 		log.Error("get now use failed", err)
 		return
 	}
-	reg := regexp.MustCompile(`go.*?go([0-9.]*)[\s].*?`)
-	verionRes := reg.FindStringSubmatch(string(goVersionCMDRes))
-	if len(verionRes) > 1 {
-		fmt.Println("now use: ", verionRes[1])
+	reg := regexp.MustCompile(`go.*?go([0-9.]+)\s.*?`)
+	versionRes := reg.FindStringSubmatch(string(goVersionCMDRes))
+	if len(versionRes) > 1 {
+		fmt.Println("now use: ", versionRes[1])
+	} else {
+		log.Error("Failed to extract Go version from command output")
 	}
 }
 
