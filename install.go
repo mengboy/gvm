@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/prometheus/common/log"
-	"github.com/spf13/cobra"
 	"os/exec"
 	"runtime"
+
+	"github.com/prometheus/common/log"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -51,7 +52,7 @@ func Install(version string, os string, arch string, form string) error {
 	fileName := fmt.Sprintf(FileName, version, installOS, installArch)
 	defaultDownloadURL := GOLang + GOLangDLURL + fileName
 	backupDownloadURL := StudyGOLang + StudyGOLangDLURL + fileName
-	if from == "studygolang"{
+	if from == "studygolang" {
 		defaultDownloadURL, backupDownloadURL = backupDownloadURL, defaultDownloadURL
 	}
 	home, err := GetUserHomePath()

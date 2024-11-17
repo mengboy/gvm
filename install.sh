@@ -19,44 +19,41 @@ if [[ $4 == "local" ]]; then
 fi
 
 cmd_exists() {
-    if [ -x "$(command -v "$1")" ]; then
-        return 0;
-    else
-       return 1;
-    fi
+  if [ -x "$(command -v "$1")" ]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 print_error() {
-    # Print output in red
-    printf "\e[0;31m  [✖] $1 $2\e[0m\n"
+  # Print output in red
+  printf "\e[0;31m  [✖] $1 $2\e[0m\n"
 }
-
 
 print_success() {
-    # Print output in green
-    printf "\e[0;32m  [✔] $1\e[0m\n"
+  # Print output in green
+  printf "\e[0;32m  [✔] $1\e[0m\n"
 }
-
 
 print_result() {
-    [ $1 -eq 0 ] \
-        && print_success "$2" \
-        || print_error "$2"
+  [ $1 -eq 0 ] &&
+    print_success "$2" ||
+    print_error "$2"
 
-    [ "$3" == "true" ] && [ $1 -ne 0 ] \
-        && exit
+  [ "$3" == "true" ] && [ $1 -ne 0 ] &&
+    exit
 }
 
-
 execute() {
-    $1 &> /dev/null
-    print_result $? "${2:-$1}"
+  $1 &>/dev/null
+  print_result $? "${2:-$1}"
 }
 
 if ! cmd_exists "wget"; then
   if ! cmd_exists "curl"; then
-    print_error "not found wget or curl ";
-    exit 1;
+    print_error "not found wget or curl "
+    exit 1
   else
     execute "curl $downUrl -o $HOME/.gvm/go$version$point$os$connect$arch$suffix"
   fi

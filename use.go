@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/prometheus/common/log"
-	"github.com/spf13/cobra"
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/prometheus/common/log"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -42,7 +43,7 @@ func use(cmd *cobra.Command, args []string) {
 		}
 		return
 	}
-	tarCmd := exec.Command("/bin/sh", "-c", "sudo rm -rf /usr/local/go &&  sudo tar  -zxf " + path + " -C " + "/usr/local")
+	tarCmd := exec.Command("/bin/sh", "-c", "sudo rm -rf /usr/local/go &&  sudo tar  -zxf "+path+" -C "+"/usr/local")
 	if _, err := tarCmd.Output(); err != nil {
 		log.Error("change go version failed", err)
 	}

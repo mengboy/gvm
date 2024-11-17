@@ -12,7 +12,6 @@ const (
 	GOLangDLURL      = "dl/"
 )
 
-
 func GetUserHomePath() (string, error) {
 	currUser, err := user.Current()
 	if err != nil {
@@ -23,5 +22,5 @@ func GetUserHomePath() (string, error) {
 }
 
 const (
-	GVMVersion  = "1.0.1"
+	GVMVersion = "1.0.1"
 )
