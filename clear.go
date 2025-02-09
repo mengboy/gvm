@@ -23,26 +23,36 @@ func clear(cmd *cobra.Command, args []string) {
 		log.Error("get home path failed", err)
 		return
 	}
+
+	gvmDir := home + "/.gvm/"
 	param := ""
 	if len(args) > 0 {
 		param = args[0]
 	}
-	gvmDir := home + "/.gvm/"
+
+	// If "all" is specified, remove the entire .gvm directory
 	if param == "all" {
 		if err := os.RemoveAll(gvmDir); err != nil {
-			log.Error(err)
+			log.Error("failed to remove all files:", err)
 			return
 		}
+		return
 	}
+
+	// Read directory contents
 	files, err := ioutil.ReadDir(gvmDir)
 	if err != nil {
-		log.Error(err)
+		log.Error("failed to read directory:", err)
+		return
 	}
-	for _, v := range files {
-		if strings.Contains(v.Name(), param) {
-			if err := os.RemoveAll(gvmDir + v.Name()); err != nil {
-				log.Error(err)
-				return
+
+	// Remove files matching the parameter
+	for _, file := range files {
+		if param == "" || strings.Contains(file.Name(), param) {
+			filePath := gvmDir + file.Name()
+			if err := os.RemoveAll(filePath); err != nil {
+				log.Error("failed to remove file:", filePath, err)
+				continue
 			}
 		}
 	}
